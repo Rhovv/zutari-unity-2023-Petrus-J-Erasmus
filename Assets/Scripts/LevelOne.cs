@@ -86,8 +86,8 @@ public class LevelOne : MonoBehaviour
 
         // This code ensures that the cube does come to rest without continuing to move in incredibly fine increments
         velocity = cube.velocity;
-        if ((velocity.x > -0.001f) && (velocity.x < 0.001f)) { velocity.x = 0f; }
-        if ((velocity.y > -0.001f) && (velocity.y < 0.001f)) { velocity.y = 0f; }
+        if ((velocity.x > -0.01f) && (velocity.x < 0.01f)) { velocity.x = 0f; }
+        if ((velocity.y > -0.01f) && (velocity.y < 0.01f)) { velocity.y = 0f; }
         cube.velocity = velocity;
 
         // Unless the cube is at rest, find the direction it is moving the fastest in and recolour the cube according to that
