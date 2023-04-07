@@ -34,6 +34,7 @@ public class LevelOne : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Add the direction components as per the key presses
         direction.x = 0f;
         if (Input.GetKey(KeyCode.A))
         {
@@ -54,6 +55,7 @@ public class LevelOne : MonoBehaviour
             direction.y -= 1f;
         }
 
+        // Check the position of the cube +- its boundries, translated to a screen point, to see if it is still on the screen. Flip its position if required
         position = cube.transform.position;
         minPos = position - box.size / 2f;
         maxPos = position + box.size / 2f;
@@ -68,20 +70,13 @@ public class LevelOne : MonoBehaviour
         cube.position = position;
     }
 
+    // Unity prefers physics calculations to be made in the fixed update function
     private void FixedUpdate()
     {
-        //velocity = cube.velocity;
-        //if (direction.x == 0f)
-        //{
-        //    velocity.x = 0f;
-        //}
-        //if (direction.y == 0f)
-        //{
-        //    velocity.y = 0f;
-        //}
-
+        // Add the forces to a direction as calculated in the Update function
         cube.AddForce(direction * speed * Time.deltaTime);
 
+        // Unless the cube is at rest, find the direction it is moving the fastest in and recolour the cube according to that
         if (cube.velocity.y != 0)
         {
             if ((cube.velocity.x != 0) && (Mathf.Abs(cube.velocity.x) > Mathf.Abs(cube.velocity.y)))
@@ -103,6 +98,7 @@ public class LevelOne : MonoBehaviour
         }
     }
 
+    // This function reads the speed that the user inputs, and also limits it between a minimum and a maximum value
     public void inSpeed_endEdit(string s)
     {
         if ((s == null) || (s == ""))
@@ -123,6 +119,7 @@ public class LevelOne : MonoBehaviour
         inSpeed.text = speed.ToString();
     }
 
+    // Return to the main screen
     public void btnMenu_click(string s)
     {
         Controller.loadScene(s);
