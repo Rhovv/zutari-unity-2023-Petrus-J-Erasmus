@@ -7,22 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class Controller : MonoBehaviour
 {
-    static bool bInitialized = false;
-
-    /*
-        This function happens on startup. While it is checked every time the Main Menu scene is loaded,
-        for this little I don't think it is necessary to add a background scene (which seems to be the
-        generally excepted solution).
-    */
-    public static void initialize()
-    {
-        if (bInitialized) { return; }
-
-        // Setting the culture info, ensures things like decimal delimantors are standard accross different applications
-        CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
-
-        bInitialized = true;
-    }
+    public static bool bLevelOneInit = false;
+    public static bool bWeatherInit = false;
 
     // Function handling the scene loading
     public static void loadScene(string s)

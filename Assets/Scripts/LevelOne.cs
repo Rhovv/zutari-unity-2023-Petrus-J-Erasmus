@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Globalization;
 
 public class LevelOne : MonoBehaviour
 {
@@ -28,6 +29,13 @@ public class LevelOne : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Use a boolean in the Controller script to allow the single instance setup where required
+        if (!Controller.bLevelOneInit)
+        {
+            Controller.bLevelOneInit = true;
+            CultureInfo.CurrentCulture = new CultureInfo("en-US", false);
+        }
+
         inSpeed.text = speed.ToString();
     }
 
@@ -75,6 +83,12 @@ public class LevelOne : MonoBehaviour
     {
         // Add the forces to a direction as calculated in the Update function
         cube.AddForce(direction * speed * Time.deltaTime);
+
+        // This code ensures that the cube does come to rest without continuing to move in incredibly fine increments
+        velocity = cube.velocity;
+        if ((velocity.x > -0.001f) && (velocity.x < 0.001f)) { velocity.x = 0f; }
+        if ((velocity.y > -0.001f) && (velocity.y < 0.001f)) { velocity.y = 0f; }
+        cube.velocity = velocity;
 
         // Unless the cube is at rest, find the direction it is moving the fastest in and recolour the cube according to that
         if (cube.velocity.y != 0)
